@@ -1,15 +1,31 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './Pages/Home';
+import { About } from './Pages/About';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div></div>
-    </>
+    <BrowserRouter>
+      <header>
+        <Link className="site-logo" to="/">
+          #VanLife
+        </Link>
+        <nav>
+          <Link to="/about">About</Link>
+        </nav>
+      </header>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route path="/About/" element={<About />} />
+
+        <Route
+          path="/"
+          element={<div className="bg-black text-white h-screen">Main </div>}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
