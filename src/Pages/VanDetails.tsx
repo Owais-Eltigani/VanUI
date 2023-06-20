@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 
 interface VanUi {
   id: string;
@@ -13,9 +13,11 @@ interface VanUi {
 export const Van = () => {
   const { id } = useParams();
   const [van, setVan] = useState<VanUi>();
+  const location = useLocation();
 
   const fetchVan = async (id: string) => {
     const res = await fetch(`/api/vans/${id}`);
+    //
     const { vans } = await res.json();
     setVan(vans);
   };
@@ -32,6 +34,13 @@ export const Van = () => {
 
   return (
     <div className="van-detail-container">
+      <Link to={`./..?${location.state.sp}`} className="back-button">
+        &larr;{' '}
+        <span>
+          Back to {location.state.type ? location.state.type : 'all'} vans
+        </span>
+      </Link>
+
       {van ? (
         <div className="van-detail">
           <img src={van.imageUrl} />
