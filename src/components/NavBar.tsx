@@ -1,11 +1,11 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const NavBar = () => {
   const styleActive = {
     color: '#161616',
     textDecoration: 'underline',
   };
+
   return (
     <header>
       <NavLink
@@ -30,6 +30,11 @@ export const NavBar = () => {
           to="/about"
           style={({ isActive }) => (isActive ? styleActive : {})}>
           About
+        </NavLink>
+        <NavLink
+          to="/login"
+          style={({ isActive }) => (isActive ? styleActive : {})}>
+          Login
         </NavLink>
       </nav>
     </header>

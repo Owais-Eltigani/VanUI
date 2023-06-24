@@ -6,7 +6,7 @@ export const Host = () => {
     color: '#161616',
     textDecoration: 'underline',
   };
-  // fetch data from api
+
   return (
     <>
       <nav className="host-nav">

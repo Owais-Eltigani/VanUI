@@ -1,20 +1,9 @@
-// import { useEffect, useState } from 'react';
-// import React from "react"
 import { Link, useLoaderData, useSearchParams } from 'react-router-dom';
+import { VanUi } from '../utils/types';
+import { fetchVans } from '../utils/APIs';
 
-interface VanUi {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  type: string;
-}
-
-export const loader = async () => {
-  const res = await fetch('/api/vans');
-  const { vans: data } = await res.json();
-  return data;
+export const loader = () => {
+  return fetchVans();
 };
 
 export const Vans = () => {
@@ -61,6 +50,7 @@ export const Vans = () => {
           onClick={() => setSearchParams({ type: 'simple' })}>
           Simple
         </button>
+
         <button
           className={`${
             typeFilter === 'luxury' ? 'selected' : ''
@@ -68,6 +58,7 @@ export const Vans = () => {
           onClick={() => setSearchParams({ type: 'luxury', tone: 'fun' })}>
           Luxury
         </button>
+
         <button
           className={`${
             typeFilter === 'rugged' ? 'selected' : ''
@@ -75,6 +66,7 @@ export const Vans = () => {
           onClick={() => setSearchParams({ type: 'rugged' })}>
           Rugged
         </button>
+
         {typeFilter ? (
           <button
             className={`${typeFilter ? 'selected' : ''} van-type clear-filters`}

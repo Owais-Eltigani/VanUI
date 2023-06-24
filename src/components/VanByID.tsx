@@ -1,14 +1,10 @@
-import React from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { VanUi } from '../utils/types';
+import { fetchHostVans } from '../utils/APIs';
 
-interface VanUi {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  type: string;
-}
+// export const loader = () => {
+//   return fetchHostVans();
+// };
 
 export const VanByID = () => {
   const { van }: { van: VanUi } = useOutletContext();

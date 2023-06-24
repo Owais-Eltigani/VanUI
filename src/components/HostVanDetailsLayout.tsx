@@ -1,9 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useParams, Link, NavLink } from 'react-router-dom';
+import {
+  Outlet,
+  Link,
+  NavLink,
+  useLoaderData,
+  useNavigate,
+} from 'react-router-dom';
+import { VanUi } from '../utils/types';
+import { fetchHostVans } from '../utils/APIs';
+
+interface params {
+  id: string;
+}
+
+export const loader = ({ params }: { params: params }) => {
+  return fetchHostVans(params.id);
+};
 
 export const HostVanDetailsLayout = () => {
-  const { id } = useParams();
-  const [van, setVan] = useState<VanUi>();
+  // const { id } = useParams();
+  // const [van, setVan] = useState<VanUi>();
+
+  const van: VanUi = useLoaderData()[0];
 
   const styleActive = {
     fontWeight: 'bold',
@@ -11,30 +28,21 @@ export const HostVanDetailsLayout = () => {
     textDecoration: 'underline',
   };
 
-  interface VanUi {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    imageUrl: string;
-    type: string;
-  }
+  // const fetchVan = async (id: string) => {
+  //   const res = await fetch(`/api/host/vans/${id}`);
+  //   const { vans } = await res.json();
+  //   setVan(vans[0]);
+  // };
 
-  const fetchVan = async (id: string) => {
-    const res = await fetch(`/api/host/vans/${id}`);
-    const { vans } = await res.json();
-    setVan(vans[0]);
-  };
+  // useEffect(() => {
+  //   try {
+  //     fetchVan(id);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
 
-  useEffect(() => {
-    try {
-      fetchVan(id);
-    } catch (err) {
-      console.log(err);
-    }
-
-    // return () => {};
-  }, [id]);
+  //   // return () => {};
+  // }, [id]);
 
   if (!van) return <div>Loading...</div>;
 

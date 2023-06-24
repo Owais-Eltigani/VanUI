@@ -1,36 +1,37 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useLoaderData } from 'react-router-dom';
+import { VanUi } from '../utils/types';
+import { fetchVans } from '../utils/APIs';
 
-interface VanUi {
+interface params {
   id: string;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  type: string;
 }
 
+export const loader = ({ params }: { params: params }) => {
+  return fetchVans(params.id);
+};
+
 export const Van = () => {
-  const { id } = useParams();
-  const [van, setVan] = useState<VanUi>();
+  // const { id } = useParams();
+  // const [van, setVan] = useState<VanUi>();
+  const van: VanUi = useLoaderData();
   const location = useLocation();
 
-  const fetchVan = async (id: string) => {
-    const res = await fetch(`/api/vans/${id}`);
-    //
-    const { vans } = await res.json();
-    setVan(vans);
-  };
+  // const fetchVan = async (id: string) => {
+  //   const res = await fetch(`/api/vans/${id}`);
+  //   //
+  //   const { vans } = await res.json();
+  //   setVan(vans);
+  // };
 
-  useEffect(() => {
-    try {
-      fetchVan(id);
-    } catch (err) {
-      console.log(err);
-    }
+  // useEffect(() => {
+  //   try {
+  //     fetchVan(id);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
 
-    // return () => {};
-  }, [id]);
+  //   // return () => {};
+  // }, [id]);
 
   return (
     <div className="van-detail-container">

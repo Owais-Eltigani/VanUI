@@ -1,33 +1,32 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import { VanUi } from '../utils/types';
+import { fetchHostVans } from '../utils/APIs';
+import { auth } from '../utils/auth';
 
-interface VanUi {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  imageUrl: string;
-  type: string;
-}
+export const loader = async () => {
+  await auth();
+  return fetchHostVans();
+};
 
 export const VansList = () => {
-  const [vans, setVans] = useState<VanUi[]>([]);
+  // const [vans, setVans] = useState<VanUi[]>([]);
+  const vans: VanUi[] = useLoaderData();
 
-  useEffect(() => {
-    try {
-      fetchData();
-    } catch (err) {
-      console.log('🚀 ~ file: Vans.tsx:28 ~ useEffect ~ err:', err);
-    }
+  // useEffect(() => {
+  //   try {
+  //     fetchData();
+  //   } catch (err) {
+  //     console.log('🚀 ~ file: Vans.tsx:28 ~ useEffect ~ err:', err);
+  //   }
 
-    // return () => {};
-  }, []);
+  //   // return () => {};
+  // }, []);
 
-  const fetchData = async () => {
-    const res = await fetch('/api/host/vans');
-    const { vans: data } = await res.json();
-    setVans(data);
-  };
+  // const fetchData = async () => {
+  //   const res = await fetch('/api/host/vans');
+  //   const { vans: data } = await res.json();
+  //   setVans(data);
+  // };
 
   const hostVansEls = vans.map(van => (
     <Link
