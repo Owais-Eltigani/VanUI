@@ -36,6 +36,11 @@ export const NavBar = () => {
           style={({ isActive }) => (isActive ? styleActive : {})}>
           Login
         </NavLink>
+        <button
+          onClick={() => localStorage.removeItem('user')}
+          className="px-4">
+          X
+        </button>
       </nav>
     </header>
   );

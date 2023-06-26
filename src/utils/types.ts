@@ -6,3 +6,8 @@ export interface VanUi {
   imageUrl: string;
   type: string;
 }
+
+export interface Credentials {
+  email: string;
+  password: string;
+}

@@ -1,18 +1,14 @@
-import {
-  Outlet,
-  Link,
-  NavLink,
-  useLoaderData,
-  useNavigate,
-} from 'react-router-dom';
+import { Outlet, Link, NavLink, useLoaderData } from 'react-router-dom';
 import { VanUi } from '../utils/types';
 import { fetchHostVans } from '../utils/APIs';
+import { auth } from '../utils/auth';
 
 interface params {
   id: string;
 }
 
-export const loader = ({ params }: { params: params }) => {
+export const loader = async ({ params }: { params: params }) => {
+  await auth();
   return fetchHostVans(params.id);
 };
 

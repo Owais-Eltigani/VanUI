@@ -3,8 +3,10 @@ import { VanUi } from '../utils/types';
 import { fetchHostVans } from '../utils/APIs';
 import { auth } from '../utils/auth';
 
-export const loader = async () => {
-  await auth();
+export const loader = async ({ request }) => {
+  const url = new URL(request.url);
+  console.log(url.pathname);
+  await auth(url.pathname);
   return fetchHostVans();
 };
 

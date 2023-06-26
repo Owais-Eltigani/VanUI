@@ -3,7 +3,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-  redirect,
 } from 'react-router-dom';
 import { Home } from './Pages/Home';
 import { About } from './Pages/About';
@@ -14,7 +13,7 @@ import {
 } from './Pages/VanDetails';
 import './server';
 import { Layout } from './components/Layout';
-import { Host } from './components/Host';
+import { Host, loader as hostLoader } from './components/Host';
 import { Income, loader as incomeLoader } from './components/Income';
 import { Review } from './components/Review';
 import { DashBoard } from './components/DashBoard';
@@ -27,8 +26,7 @@ import {
   loader as hostVanLoader,
 } from './components/HostVanDetailsLayout';
 import { NotFound } from './components/NotFound';
-import { Login } from './Pages/Login';
-import { auth } from './utils/auth';
+import { Login, action as loginAction } from './Pages/Login';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +37,7 @@ const router = createBrowserRouter(
 
       <Route path="About" element={<About />} />
 
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Login />} action={loginAction} />
 
       <Route
         path="vans"
@@ -54,20 +52,12 @@ const router = createBrowserRouter(
         loader={VanDetailsLoader}
       />
 
-      <Route path="host" element={<Host />}>
+      <Route path="host" element={<Host />} loader={hostLoader}>
         <Route index element={<DashBoard />} />
 
-        <Route path="income" element={<Income />} loader={auth} />
+        <Route path="income" element={<Income />} loader={incomeLoader} />
 
-        <Route
-          path="Reviews"
-          element={<Review />}
-          loader={async () => {
-            const loggedIn = true;
-            if (loggedIn) return redirect('/login');
-            return null;
-          }}
-        />
+        <Route path="Reviews" element={<Review />} />
 
         <Route path="VansList" element={<VansList />} loader={hostVanSLoader} />
 
@@ -75,35 +65,11 @@ const router = createBrowserRouter(
           path="vansList/:id"
           element={<VanLayout />}
           loader={hostVanLoader}>
-          <Route
-            index
-            element={<VanByID />}
-            loader={async () => {
-              const loggedIn = true;
-              if (!loggedIn) throw redirect('/login');
-              return null;
-            }}
-          />
+          <Route index element={<VanByID />} />
 
-          <Route
-            path="pricing"
-            element={<Pricing />}
-            loader={async () => {
-              const loggedIn = true;
-              if (!loggedIn) throw redirect('/login');
-              return null;
-            }}
-          />
+          <Route path="pricing" element={<Pricing />} />
 
-          <Route
-            path="photos"
-            element={<Photos />}
-            loader={async () => {
-              const loggedIn = true;
-              if (!loggedIn) throw redirect('/login');
-              return null;
-            }}
-          />
+          <Route path="photos" element={<Photos />} />
         </Route>
       </Route>
     </Route>

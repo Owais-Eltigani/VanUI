@@ -1,4 +1,10 @@
 import { Outlet, NavLink } from 'react-router-dom';
+import { auth } from '../utils/auth';
+
+export const loader = async () => {
+  // await auth();
+  return;
+};
 
 export const Host = () => {
   const styleActive = {
@@ -25,7 +31,7 @@ export const Host = () => {
 
         <NavLink
           style={({ isActive }) => (isActive ? styleActive : {})}
-          to="vansList">
+          to="vansList?redirectTo=/host/vansList">
           Vans
         </NavLink>
 

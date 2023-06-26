@@ -1,6 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
 import { VanUi } from '../utils/types';
-import { fetchHostVans } from '../utils/APIs';
 
 // export const loader = () => {
 //   return fetchHostVans();
