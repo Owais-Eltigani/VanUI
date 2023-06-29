@@ -1,6 +1,6 @@
 import { Link, useLocation, useLoaderData } from 'react-router-dom';
 import { VanUi } from '../utils/types';
-import { fetchVans } from '../utils/APIs';
+import { fetchVans /* _fireBase_fetch_van */ } from '../utils/APIs';
 
 interface params {
   id: string;
@@ -8,6 +8,7 @@ interface params {
 
 export const loader = ({ params }: { params: params }) => {
   return fetchVans(params.id);
+  // return _fireBase_fetch_van(params.id);
 };
 
 export const Van = () => {

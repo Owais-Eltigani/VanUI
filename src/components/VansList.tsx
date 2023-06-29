@@ -1,18 +1,24 @@
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData, defer, Await } from 'react-router-dom';
 import { VanUi } from '../utils/types';
-import { fetchHostVans } from '../utils/APIs';
+import { /* _fireBase_fetch_host_vans */ fetchHostVans } from '../utils/APIs';
 import { auth } from '../utils/auth';
+import React from 'react';
 
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
-  console.log(url.pathname);
-  await auth(url.pathname);
-  return fetchHostVans();
+  // return fetchHostVans();
+
+  // return defer({ vans: await _fireBase_fetch_host_vans() });
+
+  auth(url.pathname);
+  return defer({ vans: await fetchHostVans() });
 };
 
 export const VansList = () => {
   // const [vans, setVans] = useState<VanUi[]>([]);
-  const vans: VanUi[] = useLoaderData();
+
+  // const vans: VanUi[] = useLoaderData();
+  const data = useLoaderData();
 
   // useEffect(() => {
   //   try {
@@ -21,7 +27,7 @@ export const VansList = () => {
   //     console.log('🚀 ~ file: Vans.tsx:28 ~ useEffect ~ err:', err);
   //   }
 
-  //   // return () => {};
+  // //  return () => {};
   // }, []);
 
   // const fetchData = async () => {
@@ -30,31 +36,60 @@ export const VansList = () => {
   //   setVans(data);
   // };
 
-  const hostVansEls = vans.map(van => (
-    <Link
-      to={`/host/vansList/${van.id}`}
-      key={van.id}
-      className="host-van-link-wrapper">
-      <div className="host-van-single" key={van.id}>
-        <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
-        <div className="host-van-info">
-          <h3>{van.name}</h3>
-          <p>${van.price}/day</p>
+  // const hostVansEls = vans.map(van => (
+  //   <Link
+  //     to={`/host/vansList/${van.id}`}
+  //     key={van.id}
+  //     className="host-van-link-wrapper">
+  //     <div className="host-van-single" key={van.id}>
+  //       <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
+  //       <div className="host-van-info">
+  //         <h3>{van.name}</h3>
+  //         <p>${van.price}/day</p>
+  //       </div>
+  //     </div>
+  //   </Link>
+  // ));
+
+  function deferredData(vans: VanUi[]) {
+    console.log(vans);
+
+    const hostVansEls = vans.map(van => (
+      <Link
+        to={`/host/vansList/${van.id}`}
+        key={van.id}
+        className="host-van-link-wrapper">
+        <div className="host-van-single" key={van.id}>
+          <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
+          <div className="host-van-info">
+            <h3>{van.name}</h3>
+            <p>${van.price}/day</p>
+          </div>
         </div>
-      </div>
-    </Link>
-  ));
+      </Link>
+    ));
+
+    return <div className="host-vans-list">{hostVansEls}</div>;
+  }
 
   return (
     <section>
       <h1 className="host-vans-title text-4xl p-5">Your listed vans</h1>
-      <div className="host-vans-list">
-        {vans.length > 0 ? (
-          <section>{hostVansEls}</section>
-        ) : (
-          <h2>Loading...</h2>
-        )}
-      </div>
+
+      <React.Suspense
+        fallback={<h1 className="p-4 text-2xl">RENDERING ...</h1>}>
+        <Await resolve={data?.vans}>
+          {deferredData(data?.vans)}
+          {/*         <div className="host-vans-list">
+          {{vans.length > 0 ? (
+            <section>{hostVansEls}</section>
+            ) : (
+            <h2>Loading...</h2>
+            )}}
+            </div>
+          */}{' '}
+        </Await>
+      </React.Suspense>
     </section>
   );
 };

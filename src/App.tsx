@@ -14,9 +14,9 @@ import {
 import './server';
 import { Layout } from './components/Layout';
 import { Host, loader as hostLoader } from './components/Host';
-import { Income, loader as incomeLoader } from './components/Income';
+import { Income } from './components/Income';
 import { Review } from './components/Review';
-import { DashBoard } from './components/DashBoard';
+import { Dashboard, loader as dashBoardLoader } from './components/DashBoard';
 import { VansList, loader as hostVanSLoader } from './components/VansList';
 import { VanByID } from './components/VanByID';
 import { Pricing } from './components/Pricing';
@@ -52,10 +52,14 @@ const router = createBrowserRouter(
         loader={VanDetailsLoader}
       />
 
-      <Route path="host" element={<Host />} loader={hostLoader}>
-        <Route index element={<DashBoard />} />
+      <Route
+        path="host"
+        element={<Host />}
+        loader={hostLoader}
+        errorElement={<h1 className="p-4 text-2xl">Something went wrong</h1>}>
+        <Route index element={<Dashboard />} loader={dashBoardLoader} />
 
-        <Route path="income" element={<Income />} loader={incomeLoader} />
+        <Route path="income" element={<Income />} />
 
         <Route path="Reviews" element={<Review />} />
 

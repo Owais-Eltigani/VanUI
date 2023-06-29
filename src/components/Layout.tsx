@@ -7,7 +7,7 @@ export const Layout = () => {
   return (
     <>
       <NavBar />
-      <div className="min-h-[610px]">
+      <div className="min-h-[610px] px-4">
         <Outlet />
       </div>
       <Footer />

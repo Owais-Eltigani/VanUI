@@ -1,14 +1,13 @@
 import { Outlet, Link, NavLink, useLoaderData } from 'react-router-dom';
 import { VanUi } from '../utils/types';
 import { fetchHostVans } from '../utils/APIs';
-import { auth } from '../utils/auth';
 
 interface params {
   id: string;
 }
 
 export const loader = async ({ params }: { params: params }) => {
-  await auth();
+  // await auth();
   return fetchHostVans(params.id);
 };
 
@@ -16,7 +15,8 @@ export const HostVanDetailsLayout = () => {
   // const { id } = useParams();
   // const [van, setVan] = useState<VanUi>();
 
-  const van: VanUi = useLoaderData()[0];
+  const vans: VanUi[] = useLoaderData();
+  const van: VanUi = vans[0];
 
   const styleActive = {
     fontWeight: 'bold',

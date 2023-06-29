@@ -5,7 +5,9 @@ export const auth = async (url = '') => {
 
   // console.log(url);
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  const Lc = localStorage.getItem('user');
+
+  const user = Lc ? JSON.parse(Lc) : null;
 
   if (user === null) {
     // const res = redirect('/login');

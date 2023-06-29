@@ -2,7 +2,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import { auth } from '../utils/auth';
 
 export const loader = async () => {
-  // await auth();
+  await auth();
   return;
 };
 
