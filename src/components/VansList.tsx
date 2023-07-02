@@ -80,13 +80,15 @@ export const VansList = () => {
         fallback={<h1 className="p-4 text-2xl">RENDERING ...</h1>}>
         <Await resolve={data?.vans}>
           {deferredData(data?.vans)}
-          {/*         <div className="host-vans-list">
+          {/*
+          <div className="host-vans-list">
           {{vans.length > 0 ? (
             <section>{hostVansEls}</section>
             ) : (
             <h2>Loading...</h2>
             )}}
             </div>
+          
           */}{' '}
         </Await>
       </React.Suspense>

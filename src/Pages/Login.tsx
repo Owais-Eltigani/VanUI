@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   useSearchParams,
   Form,
@@ -6,7 +5,6 @@ import {
   useActionData,
   useNavigation,
 } from 'react-router-dom';
-import { Credentials } from '../utils/types';
 import { loginUser } from '../utils/APIs';
 
 export const action = async ({ request }) => {
